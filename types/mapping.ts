@@ -1,8 +1,8 @@
-export interface Mapping {
+export interface StubMapping {
   id: string
   uuid: string
-  request: Request
-  response: Response
+  request: StubRequest
+  response: StubResponse
   name?: string
   persistent?: boolean
   priority?: number
@@ -30,7 +30,7 @@ export interface BasicAuthCredentials {
   password: string
 }
 
-export interface Request {
+export interface StubRequest {
   method: Method
   url?: string
   urlPath?: string
@@ -43,7 +43,7 @@ export interface Request {
   bodyPatterns: bodyPatterns
 }
 
-export interface Response {
+export interface StubResponse {
   status: number
   statusMessage?: string
   headers?: Headers

@@ -1,5 +1,5 @@
 import { Store } from 'vuex'
-import { Mapping, Server } from 'types'
+import { StubMapping, Server } from 'types'
 
 export default class WireMock {
 
@@ -10,13 +10,32 @@ export default class WireMock {
     return `${server.host}:${server.port}`
   }
 
-  async getMappings(serverId: string): Promise<Mapping[]> {
+  async getMappings(serverId: string): Promise<StubMapping[]> {
     const url = this.getServerUrl(serverId)
-    // get server address
-    // call mappings endpoint
-    // merge with state
     const res = await this.axios.get(url + '/__admin/mappings')
+    const mappings = res.data.mappings
+    this.store.commit('mappings/load', mappings)
     return res.data.mappings
   }
+
+  // async getMapping(serverId: string, mappingId: String): Promise<StubMapping[]> {
+  //   const url = this.getServerUrl(serverId)
+  //   const res = await this.axios.get(`${url}/__admin/mappings/${mappingId}`)
+  //   return res.data
+  // }
+
+  async getRequests(serverId: string): Promise<Request[]> {
+    const url = this.getServerUrl(serverId)
+    const res = await this.axios.get(`${url}/__admin/requests`)
+    const requests = res.data.requests
+    this.store.commit('requests/load', requests)
+    return res.data.requests
+  }
+
+  // async getRequest(serverId: string, requestId: string): Promise<Request> {
+  //   const url = this.getServerUrl(serverId)
+  //   const res = await this.axios.get(`${url}/__admin/requests/${requestId}}`)
+  //   return res.data
+  // }
 
 }

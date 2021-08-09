@@ -1,6 +1,6 @@
 <template>
   <div class="mappings-page">
-    <MappingList :mappings="mappings" class=""/>
+    <MappingList :mappings="mappings"/>
     <router-view></router-view>
   </div>
 </template>
@@ -8,17 +8,16 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component } from 'nuxt-property-decorator'
-import { Mapping } from '~/types'
-import WireMock from '~/api/wiremock'
+import { AsyncContext, StubMapping } from '~/types'
 
 @Component
-export default class ServerItem extends Vue {
+export default class MappingsPage extends Vue {
   
-  mappings!: Mapping[]
+  mappings!: StubMapping[]
 
-  async asyncData({$wiremock, params}: {$wiremock: WireMock, params: {[key: string]: any}}) {
+  async asyncData(context: AsyncContext) {
     return {
-      mappings: await $wiremock.getMappings(params.serverId)
+      mappings: await context.$wiremock.getMappings(context.params.serverId)
     }
   }
 }
@@ -27,5 +26,7 @@ export default class ServerItem extends Vue {
 <style lang="scss" scoped>
  .mappings-page {
    display: flex;
+   height: 100%;
+   overflow: hidden;
  }
 </style>

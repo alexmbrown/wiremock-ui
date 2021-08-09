@@ -4,6 +4,22 @@ html,body,#__nuxt,#__layout {
   height: 100%;
 }
 
+.flex {
+  display: flex;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-start {
+  justify-content: flex-start;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
 .float-left {
   float: left;
 }
